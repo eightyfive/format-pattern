@@ -1,6 +1,6 @@
 {
   "name": "format-pattern",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Format <input pattern />",
   "scripts": {
     "build": "rm -rf dist && tsc -p .",
