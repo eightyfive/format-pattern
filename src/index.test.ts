@@ -1,7 +1,7 @@
 import { format, patternize, unformat } from "./index";
 
-const DATE_FORMAT = "00/00/0000";
-const PHONE_FORMAT = "+(00) 000-000-000";
+const DATE_FORMAT = "99/99/9999";
+const PHONE_FORMAT = "+(99) 999-999-999";
 
 describe("Format", () => {
   it("formats date", () => {

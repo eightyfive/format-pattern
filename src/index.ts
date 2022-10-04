@@ -1,11 +1,11 @@
 const RE_ALPHA = /[A-Za-z]/;
 const RE_ALPHANUM = /[A-Za-z0-9]/;
 const RE_NUM = /[0-9]/;
-const RE_RESERVED = /[0aA]/;
-const RE_STRIP = /([\W_])/g;
+const RE_RESERVED = /[0-9aA]/;
+const RE_ESCAPE = /([\W_])/g;
 
 export function unformat(text: string) {
-  return text.replace(RE_STRIP, "");
+  return text.replace(RE_ESCAPE, "");
 }
 
 export function format(text: string, template: string) {
@@ -30,12 +30,14 @@ export function format(text: string, template: string) {
 
     const inputChar = input.charAt(index);
 
-    const isInvalid =
-      (templateChar === "0" && !RE_NUM.test(inputChar)) ||
-      (templateChar === "a" && !RE_ALPHA.test(inputChar)) ||
-      (templateChar === "A" && !RE_ALPHANUM.test(inputChar));
+    const isValid =
+      (RE_NUM.test(templateChar) &&
+        RE_NUM.test(inputChar) &&
+        Number(inputChar) <= Number(templateChar)) ||
+      (templateChar === "a" && RE_ALPHA.test(inputChar)) ||
+      (templateChar === "A" && RE_ALPHANUM.test(inputChar));
 
-    if (isInvalid) {
+    if (!isValid) {
       break;
     }
 
@@ -47,14 +49,14 @@ export function format(text: string, template: string) {
 }
 
 export function patternize(template: string) {
-  const format = template.replace(RE_STRIP, "\\$1");
+  const format = template.replace(RE_ESCAPE, "\\$1");
 
   let pattern = "";
 
   for (const char of format) {
     if (!RE_RESERVED.test(char)) {
       pattern += char;
-    } else if (char === "0") {
+    } else if (RE_NUM.test(char)) {
       pattern += "\\d";
     } else if (char === "a") {
       pattern += "[A-Za-z]";
