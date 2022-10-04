@@ -6,7 +6,6 @@
     "declaration": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "removeComments": true,
     "noEmit": false,
 
@@ -24,6 +23,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true
   },
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "jest.config.js", "dist"],
 
   "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
